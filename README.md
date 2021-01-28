@@ -4,5 +4,5 @@
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/eliasinacio/dev.finances?color=green"></p>
 <h2 align="center">Descrição</h2>
 
-<p align="center">Realizado durante a Maratona Discover da <a href="https://rocketseat.com.br">Rocketseat</a>. Consiste em um monitor de finanças, no qual o usuário pode adicionar e retirar e analizar suas transações financeiras.</p>
-<p align="center">Pode ser vizualizado <a href="https://eliasinacio.github.io/rocketseat-discover/">aqui</a></p>
+<p align="center">Realizado durante a Maratona Discover da <a href="https://rocketseat.com.br" target="_blank">Rocketseat</a>. Consiste em um monitor de finanças, no qual o usuário pode adicionar e retirar e analizar suas transações financeiras.</p>
+<p align="center">Pode ser vizualizado <a href="https://eliasinacio.github.io/dev.finances/" target="_blank">aqui</a></p>
