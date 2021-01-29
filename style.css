@@ -172,6 +172,10 @@ table tbody td.income {
   color: #12a454;
 }
 
+td img {
+  cursor: pointer;
+}
+
 /* ================= MODAL */
 .modal-overlay {
   width: 100%;
