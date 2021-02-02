@@ -156,43 +156,43 @@ const Utils = {
 }
 
 
-const Form = {
-  description: document.querySelector('input#description'),
-  amount: document.querySelector('input#amount'),
-  date: document.querySelector('input#date'),
+// const Form = {
+//   description: document.querySelector('input#description'),
+//   amount: document.querySelector('input#amount'),
+//   date: document.querySelector('input#date'),
 
-  getValues() {
-    return {
-      description: Form.description.value,
-      amount: Form.amount.value,
-      date: Form.date.value
-    }
-  },
+//   getValues() {
+//     return {
+//       description: Form.description.value,
+//       amount: Form.amount.value,
+//       date: Form.date.value
+//     }
+//   },
 
-  // verificar se todas as informações foram preenchidas
-  validateFields() {
-    // desestruturação
-    const {description, amount, date } = Form.getValues()
-    if (description.trim() === "" || 
-        amount.trim() === "" || 
-        date.trim() === "") {
+//   // verificar se todas as informações foram preenchidas
+//   validateFields() {
+//     // desestruturação
+//     const {description, amount, date } = Form.getValues()
+//     if (description.trim() === "" || 
+//         amount.trim() === "" || 
+//         date.trim() === "") {
 
-        throw new Error("Por favor, preencha todos os campos")
-    }
-  },
+//         throw new Error("Por favor, preencha todos os campos")
+//     }
+//   },
 
-  submit(event) {
-    event.preventDefault()
+//   submit(event) {
+//     event.preventDefault()
 
-    Form.validateFields()
+//     Form.validateFields()
 
 
-    // salvar
-    // apagar os dados do form
-    // fechar o modal 
-    // Atualizar app
-  }
-}
+//     // salvar
+//     // apagar os dados do form
+//     // fechar o modal 
+//     // Atualizar app
+//   }
+// }
 
 
 const App = {
