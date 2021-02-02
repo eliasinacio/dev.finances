@@ -13,31 +13,22 @@ const Modal = {
 }
 
 
+// Armazenamento no Navegador
+const Storage = {
+  get() {
+    return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
+  },
+
+  set(transactions) {
+    localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
+  }
+}
+
+
 // Cálculo de Entradas e saídas
 const Transaction = {
   // array com as transações.
-  all: [
-    {
-      description: 'Salário',
-      amount: 200000,
-      date: '05/01/2021'
-    },
-    {
-      description: 'Internet',
-      amount: -14000,
-      date: '12/01/2021'
-    },
-    {
-      description: 'Aluguel',
-      amount: -50000,
-      date: '16/01/2021'
-    },
-    {
-      description: 'Compras',
-      amount: -40000,
-      date: '24/01/2021'
-    }
-  ],
+  all: Storage.get(),
   
   add(transaction) {
     Transaction.all.push(transaction)
@@ -92,13 +83,13 @@ const DOM = {
   addTransaction(transaction, index) {
     const tr = document.createElement('tr')
     tr.innerHTML = DOM.innerHTMLTransaction(transaction)
+    tr.dataset.index = index
 
     DOM.transactionsContainer.appendChild(tr)
-
   },
 
   // o corpo da alteração que vai ser adicionada à table
-  innerHTMLTransaction(transaction) {
+  innerHTMLTransaction(transaction, index) {
     const CSSclass = transaction.amount > 0 ? "income" : "expense"
     // operador ternário, se (amount > 0) a variável recebe income, senão recebe expense
 
@@ -109,7 +100,7 @@ const DOM = {
       <td class="${CSSclass}">${amount}</td>
       <td class="date">${transaction.date}</td>
       <td>
-        <img src="./assets/minus.svg" alt="Remover transação">
+        <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação">
       </td>
     `
 
@@ -139,6 +130,18 @@ const DOM = {
 
 // Formatação da moeda para BRL
 const Utils = {
+  formatAmount(value) {
+    value = Number(value) * 100
+    
+    return value
+  },
+
+  formatDate(date) {
+    const splitedDate = date.split("-") // "quebra" no parâmetro e cria um array com as partes  
+
+    return `${splitedDate[2]}/${splitedDate[1]}/${splitedDate[0]}`
+  },
+
   formatCurrency(value) {
     const signal = Number(value) < 0 ? "-" : ""
 
@@ -156,54 +159,87 @@ const Utils = {
 }
 
 
-// const Form = {
-//   description: document.querySelector('input#description'),
-//   amount: document.querySelector('input#amount'),
-//   date: document.querySelector('input#date'),
+// FÓRMULÁRIO - Entrada de dados 
+const Form = {
+  description: document.querySelector('input#description'),
+  amount: document.querySelector('input#amount'),
+  date: document.querySelector('input#date'),
 
-//   getValues() {
-//     return {
-//       description: Form.description.value,
-//       amount: Form.amount.value,
-//       date: Form.date.value
-//     }
-//   },
+  getValues() {
+    return {
+      description: Form.description.value,
+      amount: Form.amount.value,
+      date: Form.date.value
+    }
+  },
 
-//   // verificar se todas as informações foram preenchidas
-//   validateFields() {
-//     // desestruturação
-//     const {description, amount, date } = Form.getValues()
-//     if (description.trim() === "" || 
-//         amount.trim() === "" || 
-//         date.trim() === "") {
+  // verificar se todas as informações foram preenchidas
+  validateFields() {
+    // desestruturação
+    const {description, amount, date } = Form.getValues()
+    if (description.trim() === "" || amount.trim() === "" || date.trim() === "") {
+        throw new Error("Por favor, preencha todos os campos")
+        // "joga pra fora/retorna" o objeto de erro com a mensaagem
+    }
+  },
 
-//         throw new Error("Por favor, preencha todos os campos")
-//     }
-//   },
+  formatValues() {
+    let { description, amount, date } = Form.getValues()
 
-//   submit(event) {
-//     event.preventDefault()
+    amount = Utils.formatAmount(amount)
 
-//     Form.validateFields()
+    date = Utils.formatDate(date)
 
+    return {
+      description: description,
+      amount: amount,
+      date: date
+    }
+  },
 
-//     // salvar
-//     // apagar os dados do form
-//     // fechar o modal 
-//     // Atualizar app
-//   }
-// }
+  clearFields() {
+    Form.description.value = ""
+    Form.amount.value = ""
+    Form.date.value = ""
+  },
+
+  submit(event) {
+    event.preventDefault()
+
+    try {
+      // validar as informações preenchidas
+      Form.validateFields()
+
+      // formatação dos dados
+      const transaction = Form.formatValues()
+
+      // salvar transação
+      Transaction.add(transaction)
+
+      // apagar os dados do formulário
+      Form.clearFields()
+
+      // fechar modal
+      Modal.close()
+    } catch (error) {
+      alert(error.message)
+    }
+
+  }
+}
 
 
 const App = {
   init() {
     // para cada objeto do array transactions vai ser usado como parâmetro
     // na função de adicionar à table
-    Transaction.all.forEach(transaction => {
-      DOM.addTransaction(transaction)
+    Transaction.all.forEach((transaction, index) => {
+      DOM.addTransaction(transaction, index)
     })
 
     DOM.updateBalance()
+
+    Storage.set(Transaction.all)
   },
 
   reload() {
@@ -211,5 +247,5 @@ const App = {
     App.init()
   }
 }
-
+Storage.get()
 App.init()
