@@ -76,13 +76,13 @@ const Transaction = {
 
 // FUNCIONALIDADE RELACIONADAS À PARTE GRÁFICA, A DOM.
 const DOM = {
-  // "pega" o container da table para adicionar os filhos com as funções
+  // "pega" o container da table para adicionar os childs
   transactionsContainer: document.querySelector('#data-table tbody'),
 
   // cria um tr e preenche com o html do transaction
   addTransaction(transaction, index) {
     const tr = document.createElement('tr')
-    tr.innerHTML = DOM.innerHTMLTransaction(transaction)
+    tr.innerHTML = DOM.innerHTMLTransaction(transaction, index)
     tr.dataset.index = index
 
     DOM.transactionsContainer.appendChild(tr)
@@ -131,9 +131,9 @@ const DOM = {
 // Formatação da moeda para BRL
 const Utils = {
   formatAmount(value) {
-    value = Number(value) * 100
+    value = value * 100
     
-    return value
+    return Math.round(value)
   },
 
   formatDate(date) {
