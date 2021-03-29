@@ -1,9 +1,9 @@
 /* ================= GLOBAL */
 :root {
   --color-gray: #363f5f;
-  --green: #49aa26;
-  --light-green: #3ec50d;
-  --red: #e92929;
+  --pink: #ec988d;
+  --light-pink: #fd8783;
+  --light-red: #eb8080;
 }
 * {
   margin: 0;
@@ -48,7 +48,7 @@ h2 {
 
 /* =================== HEADER */
 header {
-  background: #2d4a22;
+  background: #4b041b;
   padding: 2rem 0 10rem;
   text-align: center;
 }
@@ -96,18 +96,18 @@ header {
 }
 
 .card.total {
-  background: var(--green);
+  background: var(--pink);
   color: white;
 }
 
 /* =================== TRANSACTION */
 a {
-  color: var(--green);
+  color: var(--pink);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--light-green);
+  color: var(--light-pink);
 }
 
 .button.new {
@@ -165,7 +165,7 @@ td.description {
 }
 
 table tbody td.expense {
-  color: var(--red);
+  color: #ee3535;
 }
 
 table tbody td.income {
@@ -249,7 +249,7 @@ button {
 
   border: none;
   color: white;
-  background: var(--green);
+  background: var(--pink);
 
   padding: 0;
 
@@ -259,12 +259,12 @@ button {
 }
 
 button:hover {
-  background: var(--light-green);
+  background: var(--light-pink);
 }
 
 .button.cancel {
-  color: var(--red);
-  border: 2px solid var(--red);
+  color: var(--light-red);
+  border: 2px solid var(--light-red);
   border-radius: 0.25rem;
 
   height: 50px;
